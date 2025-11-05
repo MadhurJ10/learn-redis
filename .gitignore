@@ -10,6 +10,7 @@ yarn-error.log
 .env.*.local
 
 # Build outputs
+
 dist/
 build/
 coverage/
