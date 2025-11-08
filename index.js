@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import redis from "./redisConfig.js";
 import { rateLimiter } from "./ratelimit.js";
+import { set } from "mongoose";
 
 
 const app = express();
@@ -111,6 +112,62 @@ app.post('/write-through', async (req, res) => {
         res.status(500).send("Server error");
     }
 });
+
+app.get("/redis-datatype", async (req, res) => {
+    // strings
+    redis.get("key", 'value', 'EX', TTL)//time to expire
+    redis.set('key');
+
+    //HASH
+
+    //hash stores object in key value format like json
+
+    // HSET user:123 name 'madhur' score "5" age "20"
+    // HGETALL user:123
+
+
+    await redis.hset('key', {
+        name: 'madhur',
+        score: 50,
+        age: 20
+    })
+
+    await redis.hgetall("key")
+
+
+    //------------------------ List--------------------------
+
+    // Linked list type data structure 
+    // good for queues and stack to implemnet messages and logs /
+
+    // LPUSH MSG "HELLO";
+    // RPUSH MSG "HEY"
+    // LRANGE MSG 0 -1 GETT ALL LIST 
+    // LPOP
+    // RPOP
+
+    //------------------------ set ----------------------------
+
+    // set stores unique items ,  no duplicates 
+
+    // user for blacklist token , unique tags , user badge
+
+
+    //--------------------- sorted set------------------------
+
+    // sorted set
+    // used for leadership board , ranking system , scoreaboard , priority queue
+
+
+
+    //     ZADD leaderboard 50 "Madhur"
+    // ZADD leaderboard 70 "Rohan"
+
+
+
+
+
+})
 
 
 
