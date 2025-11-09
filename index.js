@@ -162,13 +162,48 @@ app.get("/redis-datatype", async (req, res) => {
 
     //     ZADD leaderboard 50 "Madhur"
     // ZADD leaderboard 70 "Rohan"
-
-
-
-
-
 })
 
+
+app.get('/Eviction-Policies', async (params) => {
+    //     Redis uses eviction when the maxmemory is reached.
+
+    // Policy	Meaning
+    // noeviction	❌ throws error
+    // allkeys-lru	evict least-recently-used
+    // allkeys-lfu	evict least-frequently-used
+    // allkeys-random	evict random key
+    // volatile-lru	LRU from keys with TTL only
+    // volatile-lfu	LFU from TTL keys only
+    // volatile-ttl	keys expiring soon get evicted
+
+    // Most used:
+    // ✅ allkeys-lru
+    // ✅ allkeys-lfu
+})
+
+async function setAdd() {
+  await redis.zadd('leadership', [
+    { score: 0, value: "madhur" },
+    { score: 0, value: "sarva" },
+    { score: 0, value: "khushi" }
+  ]);
+
+}
+
+// setAdd();
+app.get('/sorted-set', async (req, res) => {
+//   await setAdd();
+
+  console.log(await redis.zrange("leadership", 0, -1));
+
+  const result = await redis.zrange("leadership", 0, -1);
+  console.log(result);   // → [ "madhur", "0", "sarva", "0", "khushi", "0" ]
+
+//   await redis.zincrby('leadership', 1, "madhur");
+
+  return res.send('sorted set');
+});
 
 
 
